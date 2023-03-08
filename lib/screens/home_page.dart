@@ -15,10 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late String number;
+  late String displayedNumber;
 
   @override
   void initState() {
     number = '';
+    displayedNumber = '';
     super.initState();
   }
 
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           CalculatorScreen(
-            number: number,
+            number: displayedNumber,
           ),
           const SizedBox(
             height: 15,
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                     onButtonPressed: () {
                       setState(() {
                         number = '';
+                        displayedNumber = '';
                       });
                     },
                   );
@@ -72,16 +75,22 @@ class _HomePageState extends State<HomePage> {
                   return CalculatorButton(
                     buttonText: buttons[index],
                     onButtonPressed: (() {
-                      if (number.isNotEmpty) {
-                        if (number.characters.first == '-') {
+                      if (number.isNotEmpty && displayedNumber.isNotEmpty) {
+                        if (number.characters.first == '-' &&
+                            displayedNumber.characters.first == '-') {
                           setState(() {
                             number = number.replaceAll(RegExp('-'), '');
+                            displayedNumber =
+                                displayedNumber.replaceAll(RegExp('-'), '');
                           });
                           debugPrint(number);
-                        } else if (number.characters.first != '-') {
+                        } else if (number.characters.first != '-' &&
+                            displayedNumber.characters.first != '-') {
                           setState(() {
                             number =
                                 StringUtils.addCharAtPosition(number, '-', 0);
+                            displayedNumber = StringUtils.addCharAtPosition(
+                                displayedNumber, '-', 0);
                           });
 
                           debugPrint(number);
@@ -96,6 +105,8 @@ class _HomePageState extends State<HomePage> {
                       if (number.isNotEmpty) {
                         setState(() {
                           number = (int.parse(number) / 100).toString();
+                          displayedNumber =
+                              (int.parse(displayedNumber) / 100).toString();
                         });
                       }
                     }),
@@ -106,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                       onButtonPressed: (() {
                         setState(() {
                           number += '/';
+                          displayedNumber = '';
                         });
                       }));
                 } else if (index == 7) {
@@ -114,6 +126,7 @@ class _HomePageState extends State<HomePage> {
                       onButtonPressed: (() {
                         setState(() {
                           number += 'X';
+                          displayedNumber = '';
                         });
                       }));
                 } else if (index == 11) {
@@ -122,6 +135,7 @@ class _HomePageState extends State<HomePage> {
                       onButtonPressed: (() {
                         setState(() {
                           number += '-';
+                          displayedNumber = '';
                         });
                       }));
                 } else if (index == 15) {
@@ -130,6 +144,7 @@ class _HomePageState extends State<HomePage> {
                       onButtonPressed: (() {
                         setState(() {
                           number += '+';
+                          displayedNumber = '';
                         });
                       }));
                 } else if (index == 19) {
@@ -141,6 +156,7 @@ class _HomePageState extends State<HomePage> {
                     onButtonPressed: () {
                       setState(() {
                         number += buttons[index];
+                        displayedNumber += buttons[index];
                       });
                     },
                   );
@@ -167,6 +183,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       number = removeDecimalZeroFormat(eval);
+      displayedNumber = number;
     });
   }
 
