@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/widgets/calculator_button.dart';
 import 'package:flutter_calculator/widgets/calculator_screen.dart';
@@ -16,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late String number;
   late String displayedNumber;
+  String? mode;
 
   @override
   void initState() {
@@ -113,38 +112,46 @@ class _HomePageState extends State<HomePage> {
                   );
                 } else if (index == 3) {
                   return CalculatorButton(
+                      mode: mode,
                       buttonText: buttons[index],
                       onButtonPressed: (() {
                         setState(() {
                           number += '/';
                           displayedNumber = '';
+                          mode = '/';
                         });
                       }));
                 } else if (index == 7) {
                   return CalculatorButton(
+                      mode: mode,
                       buttonText: buttons[index],
                       onButtonPressed: (() {
                         setState(() {
                           number += 'X';
                           displayedNumber = '';
+                          mode = 'X';
                         });
                       }));
                 } else if (index == 11) {
                   return CalculatorButton(
+                      mode: mode,
                       buttonText: buttons[index],
                       onButtonPressed: (() {
                         setState(() {
                           number += '-';
                           displayedNumber = '';
+                          mode = '-';
                         });
                       }));
                 } else if (index == 15) {
                   return CalculatorButton(
+                      mode: mode,
                       buttonText: buttons[index],
                       onButtonPressed: (() {
                         setState(() {
                           number += '+';
                           displayedNumber = '';
+                          mode = '+';
                         });
                       }));
                 } else if (index == 19) {
